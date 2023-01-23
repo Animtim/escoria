@@ -52,17 +52,16 @@ texture = ExtResource( 15 )
 script = ExtResource( 10 )
 
 [node name="terrain" type="Navigation2D" parent="."]
-position = Vector2( 0, 440 )
 script = ExtResource( 11 )
 scales = SubResource( 2 )
 lightmap = SubResource( 3 )
 bitmaps_scale = Vector2( 4, 4 )
 debug_mode = 0
-scale_min = 0.05
+scale_min = 0.2
 scale_max = 0.75
+y_offset = 440
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="terrain"]
-position = Vector2( 0, -442 )
 navpoly = SubResource( 1 )
 
 [node name="middle_ground_1" type="Sprite" parent="."]
@@ -105,22 +104,16 @@ __meta__ = {
 position = Vector2( 1039.61, 841.002 )
 z_index = 841
 tooltip = "A shiny bamboo"
-placeholders = {
-}
 
 [node name="good_bamboo_2" parent="." instance=ExtResource( 18 )]
 position = Vector2( 1643.11, 860.781 )
 z_index = 860
 tooltip = "A well hiden bamboo"
-placeholders = {
-}
 
 [node name="good_bamboo_3" parent="." instance=ExtResource( 16 )]
 position = Vector2( 472.343, 663.334 )
 z_index = 663
 tooltip = "A delicious bamboo"
-placeholders = {
-}
 
 [node name="bamboo_god_2" parent="." instance=ExtResource( 12 )]
 visible = false
@@ -128,17 +121,13 @@ position = Vector2( 984.846, 590.185 )
 z_index = 590
 tooltip = "The Great Panda himself!"
 active = false
-placeholders = {
-}
 
 [node name="player" parent="." instance=ExtResource( 7 )]
-position = Vector2( 742.707, 850.866 )
-scale = Vector2( 0.454718, 0.454718 )
-z_index = 850
+position = Vector2( 733, 816 )
+scale = Vector2( 0.05, 0.05 )
+z_index = 817
 speed = 1000
 telekinetic = true
-placeholders = {
-}
 
 [node name="foreground left" type="Sprite" parent="."]
 position = Vector2( 236.924, 663.079 )
@@ -160,7 +149,5 @@ __meta__ = {
 position = Vector2( 1752.96, 675.222 )
 z_index = 3000
 tooltip = "A chameleon"
-placeholders = {
-}
 
 [node name="game" parent="." instance=ExtResource( 14 )]

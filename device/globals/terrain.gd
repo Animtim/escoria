@@ -7,6 +7,8 @@ export var bitmaps_scale = Vector2(1,1) setget set_bm_scale,get_bm_scale
 export(int, "None", "Scales", "Lightmap") var debug_mode = 1 setget debug_mode_updated
 export var scale_min = 0.3
 export var scale_max = 1.0
+export var x_offset = 0
+export var y_offset = 0
 var texture
 var img_area
 var _texture_dirty = false
@@ -37,7 +39,6 @@ func get_bm_scale():
 func _update_texture():
 	if _texture_dirty:
 		return
-
 	_texture_dirty = true
 	call_deferred("_do_update_texture")
 
@@ -55,12 +56,12 @@ func _do_update_texture():
 	texture = ImageTexture.new()
 	if debug_mode == 1:
 		if scales != null:
-			#texture.create_from_image(scales)
-			texture = scales
+			texture.create_from_image(scales)
+#			texture = scales
 	else:
 		if lightmap != null:
-			#texture.create_from_image(lightmap)
-			texture = lightmap
+			texture.create_from_image(lightmap)
+#			texture = lightmap
 
 	update()
 
@@ -70,7 +71,7 @@ func debug_mode_updated(p_mode):
 
 func make_local(pos):
 	pos = pos - get_position()
-	pos = pos * 1.0 / get_scale()
+	pos = pos / get_scale()
 	if self is Navigation2D:
 		pos = get_closest_point(pos)
 	return pos
@@ -127,10 +128,10 @@ func get_light(pos):
 func get_pixel(pos, p_image):
 
 	pos = make_local(pos)
-	pos = pos * 1.0 / bitmaps_scale
+	pos = (pos - Vector2(x_offset, y_offset)) / bitmaps_scale
 
 	if pos.x + 1 >= p_image.get_width() || pos.y + 1 >= p_image.get_height() || pos.x < 0 || pos.y < 0:
-		return Color()
+		return Color(1, 1, 1, 1)
 
 
 	p_image.lock()
@@ -178,13 +179,9 @@ func _draw():
 		return
 	if debug_mode == 0:
 		return
-	#if !get_tree().is_editor_hint():
-	#	printt("*********no editor hint")
-	#	return
-	var scale = bitmaps_scale
 
 	var src = Rect2(0, 0, texture.get_width(), texture.get_height())
-	var dst = Rect2(0, 0, texture.get_width() * scale.x, texture.get_height() * scale.y)
+	var dst = Rect2(x_offset, y_offset, texture.get_width() * bitmaps_scale.x, texture.get_height() * bitmaps_scale.y)
 
 	draw_texture_rect_region(texture, dst, src)
 	#draw_texture(texture, Vector2(0, 0))
